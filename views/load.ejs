@@ -1,0 +1,258 @@
+<%- include('partials/header'); -%>
+<body>
+ <h1>Upload Artifacts: </h1>
+ <br>
+ <hr>
+    <form  action="/load" method="post">
+        <div class="form-row">
+                               
+                  <div class="form-group row">
+                    <label  class="col-sm-3 col-form-label"  for="base_url">Logged in ai-instance</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="base_url" id="base_url"  
+                      class="form-control  col-sm-8"
+                      value="<%=base_url%>"  disabled="true">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label  class="col-sm-3 col-form-label"  for="bucket">Logged in s3-bucket</label>
+                    <div class="col-sm-8">
+                      <input type="text"  name="bucket" id="bucket" 
+                      class="form-control col-sm-8 " placeholder="s3-bucket"
+                      value="<%=bucket%>" disabled="true">
+                    </div>
+                  </div>
+
+                  <hr>
+
+
+                  <div class="form-group row">
+                    <label  class="col-sm-3 col-form-label"  for="access">prefix</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control  col-sm-8"  name="prefix" id="prefix" 
+                      placeholder="if prefix = data then registration uri is ai://default/data/"  
+                       required="true">
+                    </div>
+                  </div>
+
+                  <br><br><br><br>
+                   
+                 
+                  <div class="form-group row">
+                    <label  class="col-sm-3 col-form-label"  for="access">Upload to above uri 
+                    </label>  
+                    <div class="col-sm-8">   
+                      <input id="input-5" name="inputfile" type="file" class="file"  data-show-upload="false" data-show-caption="true" multiple> 
+                     
+                    </div>
+                  </div>
+
+                  <br><hr>
+            <div class="col">
+                          <button  id="upload" type="submit" class="btn btn-primary btn-lg   pull-right">Upload</button>
+             </div>
+    </div>
+    
+    
+    </form>
+          </div>
+      
+<script>
+
+let elements = [
+    {
+      "createdAt": "2021-01-08T05:11:02+00:00",
+      "description": "glim training scenario",
+      "id": "ae0bd260-41ef-4162-81b0-861bd78a8004",
+      "modifiedAt": "2021-01-08T05:11:02+00:00",
+      "name": "glim-training"
+    },
+    {
+      "createdAt": "2021-01-08T14:24:13+00:00",
+      "description": "TensorFlow model serving",
+      "id": "aicore-sample-pipeline",
+      "modifiedAt": "2021-01-29T16:35:05+00:00",
+      "name": "TensorFlow model serving sample scenario"
+    },
+    {
+      "createdAt": "2021-01-19T10:44:22+00:00",
+      "description": "test training scenario 1",
+      "id": "0de0f069-261a-494f-913f-38c45c25f167",
+      "modifiedAt": "2021-01-19T10:44:22+00:00",
+      "name": "test-training"
+    },
+    {
+      "createdAt": "2021-01-26T11:40:18+00:00",
+      "description": "Amitava Test Mnist",
+      "id": "amitava_2",
+      "modifiedAt": "2021-01-26T11:40:18+00:00",
+      "name": "testscenario"
+    },
+    {
+      "createdAt": "2021-01-26T11:46:18+00:00",
+      "description": "Amitava Test Mnist 26-Jan",
+      "id": "amit2601",
+      "modifiedAt": "2021-01-26T11:46:18+00:00",
+      "name": "amit2601"
+    },
+    {
+      "createdAt": "2021-02-01T21:41:57+00:00",
+      "id": "churn",
+      "modifiedAt": "2021-02-01T21:41:57+00:00",
+      "name": "churn"
+    },
+    {
+      "createdAt": "2021-02-09T10:44:44+00:00",
+      "id": "mnist-serve",
+      "modifiedAt": "2021-02-09T10:44:44+00:00",
+      "name": ""
+    },
+    {
+      "createdAt": "2021-02-10T20:33:04+00:00",
+      "description": "glim inference scenario 8",
+      "id": "ae0bd260-41ef-4162-81b0-861bd78a8345",
+      "modifiedAt": "2021-02-10T20:33:04+00:00",
+      "name": "glim-inference"
+    },
+    {
+      "createdAt": "2021-02-10T20:48:48+00:00",
+      "description": "glim training scenario 8",
+      "id": "glim1002",
+      "modifiedAt": "2021-02-10T20:48:48+00:00",
+      "name": "glim1002"
+    },
+    {
+      "createdAt": "2021-02-12T12:29:27+00:00",
+      "description": "Hackathon3 mnist1202",
+      "id": "mnist1202",
+      "modifiedAt": "2021-02-12T12:29:27+00:00",
+      "name": "mnist1202"
+    },
+    {
+      "createdAt": "2021-02-16T15:37:10+00:00",
+      "description": "winereg1602",
+      "id": "winereg1602",
+      "modifiedAt": "2021-02-16T15:37:10+00:00",
+      "name": "winereg1602"
+    },
+    {
+      "createdAt": "2021-02-20T18:37:47+00:00",
+      "description": "churn2002",
+      "id": "churn2002",
+      "modifiedAt": "2021-02-20T18:37:47+00:00",
+      "name": "churn2002"
+    },
+    {
+      "createdAt": "2021-02-22T21:49:48+00:00",
+      "description": "spacyner2202",
+      "id": "spacyner2202",
+      "modifiedAt": "2021-02-22T21:49:48+00:00",
+      "name": "spacyner2202"
+    },
+    {
+      "createdAt": "2021-02-28T17:36:04+00:00",
+      "description": "nodemongoatlas",
+      "id": "nodemongoatlas",
+      "modifiedAt": "2021-02-28T17:36:04+00:00",
+      "name": "nodemongoatlas"
+    },
+    {
+      "createdAt": "2021-03-01T09:28:35+00:00",
+      "description": "noderfc2702",
+      "id": "noderfc2702",
+      "modifiedAt": "2021-03-01T09:28:35+00:00",
+      "name": "noderfc2702"
+    },
+    {
+      "createdAt": "2021-03-02T22:32:14+00:00",
+      "description": "tesseract",
+      "id": "tesseract",
+      "modifiedAt": "2021-03-02T22:32:14+00:00",
+      "name": "tesseract"
+    },
+    {
+      "createdAt": "2021-03-23T20:30:22+00:00",
+      "description": "processcrud",
+      "id": "processcrud",
+      "modifiedAt": "2021-03-23T20:30:22+00:00",
+      "name": "processcrud"
+    },
+    {
+      "createdAt": "2021-03-23T22:53:55+00:00",
+      "description": "variantconfig",
+      "id": "variantconfig",
+      "modifiedAt": "2021-03-23T22:53:55+00:00",
+      "name": "variantconfig"
+    },
+    {
+      "createdAt": "2021-03-25T20:02:16+00:00",
+      "description": "outputparam",
+      "id": "outputparam",
+      "modifiedAt": "2021-03-25T20:02:16+00:00",
+      "name": "outputparam"
+    },
+    {
+      "createdAt": "2021-03-26T08:36:38+00:00",
+      "description": "crud",
+      "id": "crud",
+      "modifiedAt": "2021-03-26T08:36:38+00:00",
+      "name": "crud"
+    },
+    {
+      "createdAt": "2021-03-29T16:28:31+00:00",
+      "description": "process2903",
+      "id": "process2903",
+      "modifiedAt": "2021-03-29T16:28:31+00:00",
+      "name": "process2903"
+    },
+    {
+      "createdAt": "2021-04-08T18:21:09+00:00",
+      "id": "spacyserve",
+      "modifiedAt": "2021-04-08T18:21:09+00:00",
+      "name": "spacyserve"
+    },
+    {
+      "createdAt": "2021-04-15T19:46:19+00:00",
+      "description": "churn prediction scenario desc",
+      "id": "churn-prediction-user13",
+      "modifiedAt": "2021-04-15T19:46:19+00:00",
+      "name": "churnscenarioname"
+    },
+    {
+      "createdAt": "2021-04-18T19:55:21+00:00",
+      "description": "materialbasicdata",
+      "id": "materialbasicdata",
+      "modifiedAt": "2021-04-18T19:55:21+00:00",
+      "name": "materialbasicdata"
+    },
+    {
+      "createdAt": "2021-04-18T20:01:20+00:00",
+      "id": "materialbasicdataserve",
+      "modifiedAt": "2021-04-18T20:01:20+00:00",
+      "name": "materialbasicdataserve"
+    },
+    {
+      "createdAt": "2021-05-22T21:36:36+00:00",
+      "description": "process2205",
+      "id": "process2205",
+      "modifiedAt": "2021-05-22T21:36:36+00:00",
+      "name": "process2205"
+    }
+  ]
+
+
+let select = document.querySelector("#scenario_id")
+
+for (let elt of elements){
+  let option = document.createElement("option");
+  option.text = elt.name;
+  option.value = elt.id;
+  select.appendChild(option);
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: process2903
+  generateName: argo-mnist-template-
+  annotations:
+    scenarios.ai.sap.com/description: process2903
+    scenarios.ai.sap.com/name: process2903
+    executables.ai.sap.com/name: process2903
+    executables.ai.sap.com/description: "Create crud with mongo"
+    artifacts.ai.sap.com/training-data.kind: "dataset"
+    artifacts.ai.sap.com/model.kind: "model"
+  labels:
+    ai.sap.com/version: 0.1.0
+    scenarios.ai.sap.com/id: process2903
+spec:
+  imagePullSecrets:
+  - name: amit-docker-registry-secret
+  entrypoint: process2903
+  
+  volumeClaimTemplates:
+  - metadata:
+      name: workdir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+
+  arguments:
+    parameters:
+    - name: training-epochs
+      value: 30
+
+  templates:
+  - name: process2903
+    steps:
+    
+    - - name: material-inputs
+        template: material-inputs
+    - - name: bom
+        template: bom
+      - name: infrec
+        template: infrec
+      - name: base-price
+        template: base-price
+
+  - name: material-inputs
+    metadata:
+      annotations:
+                
+        traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
+        
+    container:
+      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      
+      
+      command: [sh, -c]
+      args:
+      - >
+        
+        mkdir -p /mnt/tmp;
+        node /product.js ;
+       
+      env:
+      - name: DATA_FOLDER
+        value: /training/input_data
+      - name: OUT_FOLDER
+        value: /mnt/tmp
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/tmp  
+    
+    inputs:
+      artifacts:
+      - name: training-data
+        path: /training/input_data
+        archive:
+          none: {}
+         
+    outputs:
+      artifacts:
+      - name: product
+        path: /mnt/tmp
+        globalName: product
+        archive:
+          none: {}  
+          
+  - name: base-price
+    metadata:
+      annotations:
+                
+        traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
+        
+    container:
+      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      
+      
+      command: [sh, -c]
+      args:
+      - >
+        
+        mkdir -p /mnt/tmp;
+        node /price.js ;
+       
+      env:
+      - name: DATA_FOLDER
+        value: /training/input_data
+      - name: OUT_FOLDER
+        value: /mnt/tmp
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/tmp  
+    
+    inputs:
+      artifacts:
+      - name: training-data
+        path: /training/input_data
+        archive:
+          none: {}
+         
+    outputs:
+      artifacts:
+      - name: price
+        path: /mnt/tmp
+        globalName: price
+        archive:
+          none: {}   
+              
+  - name: bom
+    metadata:
+      annotations:
+                
+        traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
+        
+    container:
+      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      
+      command: [sh, -c]
+      args:
+      - >
+        node /bom.js;
+      
+      
+      env:
+      - name: DATA_FOLDER
+        value: /training/input_data
+      - name: OUT_FOLDER
+        value: /mnt/tmp
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/tmp
+        
+    inputs:
+      artifacts:
+      - name: product
+        path: /training/input_data
+        archive:
+          none: {} 
+      
+    outputs:
+      artifacts:
+      - name: bom
+        path: /mnt/tmp
+        globalName: bom
+        archive:
+          none: {}  
+  
+  - name: infrec
+    metadata:
+      annotations:
+                
+        traffic.sidecar.istio.io/includeOutboundIPRanges: 172.20.0.0/16,100.64.0.0/10,100.100.0.0/16,169.254.169.254/32,100.64.0.0/13,100.96.0.0/11,10.250.0.0/16,100.96.0.0/11,10.250.0.0/16,100.64.0.0/13
+        
+    container:
+      image: "mlf.docker.repositories.sapcdn.io/processcrud:latest"
+      
+      command: [sh, -c]
+      args:
+      - >
+        node /infrec.js;
+           
+      
+      env:
+        
+      - name: DATA_FOLDER
+        value: /training/input_data
+      - name: OUTPUT_FOLDER
+        value: /mnt/tmp
+        
+      
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/tmp
+    
+    inputs:
+      artifacts:
+      - name: product
+        path: /training/input_data
+        archive:
+          none: {}  

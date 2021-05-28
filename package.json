@@ -1,0 +1,26 @@
+{
+  "name": "awsreadgetlistobjects",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "aws-sdk": "^2.917.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "js-yaml": "^4.1.0",
+    "request": "^2.88.2",
+    "simple-git": "^2.39.0",
+    "write-yaml-file": "^4.2.0",
+    "yaml": "^1.10.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amitava Mitra",
+  "license": "ISC",
+  "engines": {
+    "node": "12.19.0"
+  },
+  "description": "Load File and Trigger Execution Pipeline in Argo from NodeJs"
+}

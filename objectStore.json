@@ -1,0 +1,9 @@
+{
+    "bucket": "hcp-8da2bd2a-eb08-4998-baf0-3ceae565e40d",
+    "access_key_id": "AKIAQT4HBU7563FD4N6E",
+    "secret_access_key": "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",
+    "host": "s3-eu-central-1.amazonaws.com",
+    "region": "eu-central-1",
+    "uri": "s3://AKIAQT4HBU7563FD4N6E:npnV1EiUb9cj0TA5FribwyS1jOe2SNmf%2FcUis%2Fea@s3-eu-central-1.amazonaws.com/hcp-8da2bd2a-eb08-4998-baf0-3ceae565e40d",
+    "username": "hcp-s3-71a40da5-620c-4a89-943c-e7e960244aa2"
+  }

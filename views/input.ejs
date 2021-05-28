@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/header'); -%>
+  <title>Aif Made Easy</title>
+</head>
+
+<body>
+    <section class="content">
+        <h1 class="content__heading">Create Argo Template</h1>
+               
+        <form class="content__form contact-form"  action="" method="get">
+          <div class="testing">
+          
+          </div>
+          <div class="contact-form__input-group  form-row">
+            <input class="contact-form__input contact-form__input--radio" id="salutation-mr" name="salutation" type="radio" value="Mr."/>
+            <label class="contact-form__label contact-form__label--radio" for="salutation-mr">Mr.</label>
+            <input class="contact-form__input contact-form__input--radio" id="salutation-mrs" name="salutation" type="radio" value="Mrs."/>
+            <label class="contact-form__label contact-form__label--radio" for="salutation-mrs">Mrs.</label>
+            <input class="contact-form__input contact-form__input--radio" id="salutation-ms" name="salutation" type="radio" value="Ms."/>
+            <label class="contact-form__label contact-form__label--radio" for="salutation-ms">Ms.</label>
+          </div>
+          <div class="contact-form__input-group  form-row">
+              <div class="col">
+              <input type="text"  name="apiVersion" id="apiVersion" 
+              class="form-control contact-form__input contact-form__input--text" 
+              value="argoproj.io/v1alpha1">
+              </div>
+            
+              <div class="col">
+                <input type="text"  name="kind" id="kind" 
+                class="form-control contact-form__input contact-form__input--text" 
+                value="WorkflowTemplate">
+              </div>  
+
+              <label  class="contact-form__label" >metadata:</label>
+              <div class="col">
+                <input type="text"  name="metadata:" id="metadata:" 
+                class="form-control contact-form__input contact-form__input--text" 
+                >
+              </div>  
+
+              <div class="contact-form__input-group">
+                <p class="contact-form__label--checkbox-group">12metadata:</p>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata" type="checkbox" value="scenario:/id"/>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata" type="checkbox" value="scenario:/desc"/>
+                
+                <label class="contact-form__label contact-form__label--checkbox" for="snacks-pizza">scenario:/id</label>
+                <input class="contact-form__input contact-form__input--checkbox" id="snacks-cake" name="snacks" type="checkbox" value="cake"/>
+                
+              </div>
+              
+
+          </div>
+    
+          <div class="contact-form__input-group">
+            <p class="contact-form__label--checkbox-group">Please send me:</p>
+            <input class="contact-form__input contact-form__input--checkbox" id="snacks-pizza" name="metadata: " type="checkbox" value="scenarios.ai.sap.com/description:"/>
+            <div class="col"> 
+            <label class="contact-form__label contact-form__label--checkbox"  checked="true"   for="name">scenarios.ai.sap.com/description:</label>
+                 <input type="text"  name="name" id="name" 
+              class="form-control contact-form__input contact-form__input--text" 
+              value="crud2305">
+              </div>
+
+
+
+
+            <label class="contact-form__label contact-form__label--checkbox" for="snacks-cake">Cake</label>
+          </div>
+          <input name="authentication" type="hidden" value="Token 1b3a9374-1a8e-434e-90ab-21aa7b9b80e7"/>
+          <div>
+          <input name:"query" type="hidden" id="demo" value="query:{}"/>
+          </div>
+          
+          <button class="contact-form__button" type="submit">Send It!</button>
+        </form>
+      </section>
+      <div class="results">
+        <h2 class="results__heading">Form Data</h2>
+        <pre class="results__display-wrapper"><code class="results__display"></code></pre>
+      </div>
+
+<script>
+    /**
+ * Checks that an element has a non-empty `name` and `value` property.
+ * @param  {Element} element  the element to check
+ * @return {Bool} true if the element is an input, false if not
+ */
+const isValidElement = element => {
+  return element.name && element.value;
+};
+
+/**
+ * Checks if an element’s value can be saved (e.g. not an unselected checkbox).
+ * @param  {Element} element  the element to check
+ * @return {Boolean}          true if the value should be added, false if not
+ */
+const isValidValue = element => {
+  return !["checkbox", "radio"].includes(element.type) || element.checked;
+};
+
+/**
+ * Checks if an input is a checkbox, because checkboxes allow multiple values.
+ * @param  {Element} element  the element to check
+ * @return {Boolean}          true if the element is a checkbox, false if not
+ */
+const isCheckbox = element => element.type === "checkbox";
+
+/**
+ * Checks if an input is a `select` with the `multiple` attribute.
+ * @param  {Element} element  the element to check
+ * @return {Boolean}          true if the element is a multiselect, false if not
+ */
+const isMultiSelect = element => element.options && element.multiple;
+
+/**
+ * Retrieves the selected options from a multi-select as an array.
+ * @param  {HTMLOptionsCollection} options  the options for the select
+ * @return {Array}                          an array of selected option values
+ */
+const getSelectValues = options =>
+  [].reduce.call(
+    options,
+    (values, option) => {
+      return option.selected ? values.concat(option.value) : values;
+    },
+    []
+  );
+
+/**
+ * A more verbose implementation of `formToJSON()` to explain how it works.
+ *
+ * NOTE: This function is unused, and is only here for the purpose of explaining how
+ * reducing form elements works.
+ *
+ * @param  {HTMLFormControlsCollection} elements  the form elements
+ * @return {Object}                               form data as an object literal
+ */
+const formToJSON_deconstructed = elements => {
+  // This is the function that is called on each element of the array.
+  const reducerFunction = (data, element) => {
+    // Add the current field to the object.
+    data[element.name] = element.value;
+
+    // For the demo only: show each step in the reducer’s progress.
+    console.log(JSON.stringify(data));
+
+    return data;
+  };
+
+  // This is used as the initial value of `data` in `reducerFunction()`.
+  const reducerInitialValue = {};
+
+  // To help visualize what happens, log the inital value, which we know is `{}`.
+  console.log("Initial `data` value:", JSON.stringify(reducerInitialValue));
+
+  // Now we reduce by `call`-ing `Array.prototype.reduce()` on `elements`.
+  const formData = [].reduce.call(
+    elements,
+    reducerFunction,
+    reducerInitialValue
+  );
+
+  // The result is then returned for use elsewhere.
+  return formData;
+};
+
+/**
+ * Retrieves input data from a form and returns it as a JSON object.
+ * @param  {HTMLFormControlsCollection} elements  the form elements
+ * @return {Object}                               form data as an object literal
+ */
+const formToJSON = elements =>
+  [].reduce.call(
+    elements,
+    (data, element) => {
+      // Make sure the element has the required properties and should be added.
+      if (isValidElement(element) && isValidValue(element)) {
+        /*
+     * Some fields allow for more than one value, so we need to check if this
+     * is one of those fields and, if so, store the values as an array.
+     */
+        if (isCheckbox(element)) {
+          data[element.name] = (data[element.name] || []).concat(element.value);
+        } else if (isMultiSelect(element)) {
+          data[element.name] = getSelectValues(element);
+        } else {
+          data[element.name] = element.value;
+        }
+      }
+
+      return data;
+    },
+    {}
+  );
+
+/**
+ * A handler function to prevent default submission and run our custom script.
+ * @param  {Event} event  the submit event triggered by the user
+ * @return {void}
+ */
+const handleFormSubmit = event => {
+  // Stop the form from submitting since we’re handling that with AJAX.
+  event.preventDefault();
+
+  // Call our function to get the form data.
+  const data = formToJSON(form.elements);
+
+  // Demo only: print the form data onscreen as a formatted JSON object.
+  const dataContainer = document.getElementsByClassName("results__display")[0];
+
+  // Use `JSON.stringify()` to make the output valid, human-readable JSON.
+  dataContainer.textContent = JSON.stringify(data, null, "  ");
+
+  // ...this is where we’d actually do something with the form data...
+};
+
+/*
+ * This is where things actually get started. We find the form element using
+ * its class name, then attach the `handleFormSubmit()` function to the 
+ * `submit` event.
+ */
+var form = document.getElementsByClassName("contact-form")[0];
+if (form){
+	form.addEventListener("submit", handleFormSubmit, false);
+}
+
+/* adding more background info to grab from user */
+function myFunction() {
+	var z = document.getElementById("query").value;
+  var x = navigator.userAgent;
+	var y = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var obj = {"browser_timezone" : String(y),"user_agent" : String(x),"query": String(z)};
+    var myJSON = JSON.stringify(obj);
+    document.getElementById("demo").innerHTML = myJSON;
+}
+if(window.attachEvent) {
+    window.attachEvent('onload', myFunction);
+} else {
+    if(window.onload) {
+        var curronload = window.onload;
+        var newonload = function(evt) {
+            curronload(evt);
+            myFunction(evt);
+        };
+        window.onload = newonload;
+    } else {
+        window.onload = myFunction;
+    }
+}
+</script>
+
+</body>
+
+</html>

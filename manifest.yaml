@@ -1,0 +1,31 @@
+applications:
+# Application
+- name: awsreadgetlistojbects
+  instances: 1
+  memory: 128M
+  routes:
+    - route: awsreadgetlistojbects-ap25.cfapps.eu10.hana.ondemand.com
+  path: awsreadgetlistojbects
+  buildpacks:
+    - nodejs_buildpack  
+  timeout: 180
+  services:
+    - xsuaa-service-tutorial
+
+# Application Router
+- name: approuter
+  routes:
+    - route: approuter-awsreadgetlistojbects-ap25.cfapps.eu10.hana.ondemand.com
+  path: approuter
+  buildpacks:
+    - nodejs_buildpack
+  memory: 128M
+  services:
+    - xsuaa-service-tutorial
+  env:
+    destinations: >
+      [
+        {"name":"products-destination",
+         "url":"https://awsreadgetlistojbects-ap25.cfapps.eu10.hana.ondemand.com",
+         "forwardAuthToken": true}
+      ]

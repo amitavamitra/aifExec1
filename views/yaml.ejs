@@ -1,0 +1,110 @@
+<!-- create the yaml file from inputs -->
+<%- include('partials/header'); -%>
+<h1>Create argo Workflow Template</h1>
+<body>
+    <!-- <form action="/create_argoWT" method="post"> -->
+        <form class="content__form contact-form"  action="/" method="POST">
+    <div class="form-row   contact-form__input-group">
+    <div class="col">
+    <input type="text"  name="apiVersion" id="apiVersion" class="form-control" value="argoproj.io/v1alpha1">
+    </div>
+    <div class="col">
+    <input type="text"  name="kind" id="kind" class="form-control" value="WorkflowTemplate">
+    </div>
+    <label for="">metadata:</label>
+    <div class="form-group row">
+      <label for="meta_name" class=" contact-form__label col-sm-4 col-form-label">name:</label>
+      <div class="col-sm-8">
+        <input type="text" name="meta_name" 
+        class="form-control contact-form__input contact-form__input--text" 
+        id="meta_name" value="crud2305">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="generateName" class=" contact-form__label col-sm-4 col-form-label">generateName:</label>
+      <div class="col-sm-8">
+        <input type="text"  name="generateName" 
+        id="generateName" class="form-control" value="argo-crud-template-">
+      </div>
+    </div>
+    <hr>
+    <label for="">annotations:</label>
+        <div class="form-group row">
+            <label for="scenarios_description" class=" contact-form__label col-sm-4 col-form-label">scenarios.ai.sap.com/description:</label>
+            <div class="col-sm-8">
+              <input type="text" name="scenarios_description" class="form-control contact-form__input contact-form__input--text" id="scenarios_description" placeholder="A Meaningful Description">
+            </div>
+          </div>
+        <div class="form-group row">
+            <label for="scenarios_name" class="col-sm-4 col-form-label">scenarios.ai.sap.com/name:</label>
+            <div class="col-sm-8">
+              <input type="text" name="scenarios_name" class="form-control contact-form__input contact-form__input--text" id="scenarios_name" value="crud2305">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="executables_name" class="col-sm-4 col-form-label">executables.ai.sap.com/name:</label>
+            <div class="col-sm-8">
+              <input type="text" name="executables_name" class="form-control" id="executables_name" value="crud2305">
+            </div>
+          </div>
+        <div class="form-group row">
+            <label for="executables_description" class="col-sm-4 col-form-label">executables.ai.sap.com/description:</label>
+            <div class="col-sm-8">
+              <input type="text" name="executables_description" class="form-control" id="executables_description" value="crud2305">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="artifacts_datakind" class="col-sm-4 col-form-label">artifacts.ai.sap.com/training-data.kind:</label>
+            <div class="col-sm-8">
+              <input type="text" name="artifacts_datakind" class="form-control" id="artifacts_datakind" value='"dataset"'>
+            </div>
+          </div>
+        <div class="form-group row">
+            <label for="artifacts_modelkind" class="col-sm-4 col-form-label">artifacts.ai.sap.com/model.kind:</label>
+            <div class="col-sm-8">
+              <input type="text" name="artifacts_modelkind" class="form-control" id="artifacts_modelkind" value='"model"'>
+            </div>
+          </div>
+          <hr>
+          <label for="">labels:</label>
+          <div class="form-group row">
+            <label for="ai_version" class="col-sm-4 col-form-label">ai.sap.com/version:</label>
+            <div class="col-sm-8">
+              <input type="text" name="ai_version" class="form-control" id="ai_version" value='0.1.0'>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="scenarios_id" class="col-sm-4 col-form-label">scenarios.ai.sap.com/id:</label>
+            <div class="col-sm-8">
+              <input type="text" name="scenarios_id" class="form-control" id="scenarios_id" value='crud'>
+            </div>
+          </div>
+          <hr>
+          <label for="">spec:</label>
+          <br>
+          <label for="">imagePullSecrets:</label>
+          <div class="form-group row">
+            <label for="docker_secret" class="col-sm-4 col-form-label">- name:</label>
+            <div class="col-sm-8">
+              <input type="text" name="docker_secret" class="form-control" id="docker_secret" value='amit-docker-registry-secret'>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="entrypoint:" class="col-sm-4 col-form-label">entrypoint:</label>
+            <div class="col-sm-8">
+              <input type="text" name="entrypoint" class="form-control" id="entrypoint" value='crud'>
+            </div>
+          </div>
+
+          <div>
+            <input name:"query" type="hidden" id="demo" value="query:{}"/>
+            </div>
+            
+            <button class="contact-form__button" type="submit">Send It!</button>
+    </div>
+
+    
+    </form>
+  
+    
+</body>
